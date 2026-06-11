@@ -500,3 +500,11 @@ body{
 .barra-pesquisa{
     transition: all 0.5s ease;
 }
+
+.logo img{
+    height: 300px;
+    width: auto;
+    display: block;
+
+    transition: opacity 0.3s ease;
+}

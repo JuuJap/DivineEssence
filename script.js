@@ -32,9 +32,30 @@ window.addEventListener("scroll", () => {
 // TEMA
 
 const btnTema = document.getElementById("btnTema");
+const logoSite = document.getElementById("logoSite");
 
+function trocarLogo(novaLogo){
+
+    logoSite.style.opacity = "0";
+
+    setTimeout(() => {
+        logoSite.src = novaLogo;
+        logoSite.style.opacity = "1";
+    }, 150);
+
+}
+
+// Carrega tema salvo
 if(localStorage.getItem("tema") === "dark"){
+
     document.body.classList.add("dark-mode");
+
+    logoSite.src = "img/LDE-dark.png";
+
+}else{
+
+    logoSite.src = "img/LDE.png";
+
 }
 
 btnTema.addEventListener("click", () => {
@@ -44,9 +65,17 @@ btnTema.addEventListener("click", () => {
     document.body.classList.toggle("dark-mode");
 
     if(document.body.classList.contains("dark-mode")){
+
         localStorage.setItem("tema", "dark");
-    } else {
+
+        trocarLogo("img/LDE-dark.png");
+
+    }else{
+
         localStorage.setItem("tema", "light");
+
+        trocarLogo("img/LDE.png");
+
     }
 
     setTimeout(() => {
