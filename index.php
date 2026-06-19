@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Divine Essence</title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- BOOTSTRAP -->
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+  />
+
+  <!-- Ícones -->
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+  />
+
+</head>
+
+<body>
+
+  <!-- HEADER -->
+  <header class="topo">
+
+<div class="logo">
+  <img id="logoSite" src="img/LDE.png" alt="Divine Essence">
+</div>
+
+    <div class="barra-pesquisa">
+      <input type="text" placeholder="Buscar produto" />
+      <i class="fa-solid fa-magnifying-glass"></i>
+    </div>
+
+    <div class="carrinho">
+      <i class="fa-solid fa-cart-shopping"></i>
+      <span>0</span>
+    </div>
+
+<div class="tema">
+    <button id="btnTema">
+        <i class="fa-solid fa-moon"></i>
+    </button>
+</div>
+
+  </header>
+
+  <!-- MENU -->
+  <nav class="menu">
+    <a href="#">Promoções</a>
+    <a href="#">Lançamentos</a>
+    <a href="#">Femininos</a>
+    <a href="#">Infantis</a>
+    <a href="#">Masculinos</a>
+  </nav>
+
+  <!-- CARROSSEL / BANNER -->
+  <section class="banner-carousel">
+
+    <div
+      id="bannerPrincipal"
+      class="carousel slide"
+      data-bs-ride="carousel"
+    >
+
+      <!-- INDICADORES -->
+    <div class="carousel-indicators">
+    
+    <button
+      type="button"
+      data-bs-target="#bannerPrincipal"
+      data-bs-slide-to="0"
+      class="active"
+      aria-current="true"
+      aria-label="Slide 1"
+   ></button>
+
+    <button
+      type="button"
+      data-bs-target="#bannerPrincipal"
+      data-bs-slide-to="1"
+      aria-label="Slide 2"
+   ></button>
+
+    <button
+     type="button"
+      data-bs-target="#bannerPrincipal"
+      data-bs-slide-to="2"
+     aria-label="Slide 3"
+    ></button>
+
+   <button
+      type="button"
+      data-bs-target="#bannerPrincipal"
+      data-bs-slide-to="3" 
+      aria-label="Slide 4"
+    ></button>
+
+    </div>
+
+      <!-- SLIDES -->
+      <div class="carousel-inner">
+
+        <div class="carousel-item active">
+          <div class="banner banner1"></div>
+        </div>
+
+        <div class="carousel-item">
+          <div class="banner banner2"></div>
+        </div>
+
+        <div class="carousel-item">
+          <div class="banner banner3"></div>
+        </div>
+
+        <div class="carousel-item">
+          <div class="banner banner4"></div>
+        </div>
+
+      </div>
+
+      <!-- BOTÃO ANTERIOR -->
+      <button
+        class="carousel-control-prev"
+        type="button"
+        data-bs-target="#bannerPrincipal"
+        data-bs-slide="prev"
+      >
+        <span class="carousel-control-prev-icon"></span>
+      </button>
+
+      <!-- BOTÃO PRÓXIMO -->
+      <button
+        class="carousel-control-next"
+        type="button"
+        data-bs-target="#bannerPrincipal"
+        data-bs-slide="next"
+      >
+        <span class="carousel-control-next-icon"></span>
+      </button>
+
+    </div>
+
+  </section>
+
+  <!-- COLEÇÕES -->
+  <section class="colecoes">
+
+    <h2 class="titulo-colecoes">Coleções</h2>
+
+    <div class="cards-colecoes">
+
+      <a href="#" class="colecao-card">
+        <img src="img/colecao1.png" alt="Coleção Lunar Men">
+      </a>
+
+      <a href="#" class="colecao-card">
+        <img src="img/colecao2.jpg" alt="Coleção Nature">
+      </a>
+
+      <a href="#" class="colecao-card">
+        <img src="img/colecao3.png" alt="Coleção Lunar Men">
+      </a>
+
+    </div>
+
+  </section>
+
+  <!-- PRODUTOS -->
+  <section class="produtos">
+
+    <div class="topo-produtos">
+
+      <h2>Produtos</h2>
+
+      <a href="#">Ver todos</a>
+
+    </div>
+
+    <div class="grid-produtos">
+
+      <!-- PRODUTO 1 -->
+<div class="produto-card">
+
+    <div class="produto-img">
+        <img src="img/perfume2.png" alt="Orquídea Selvagem">
+    </div>
+
+    <div class="avaliacao">
+        ★★★★★ <span>(170)</span>
+    </div>
+
+    <h3>Orquídea Silvestre</h3>
+
+    <p class="preco">R$ 149,90</p>
+
+</div>
+
+      <!-- PRODUTO 2 -->
+<div class="produto-card">
+
+    <div class="produto-img">
+        <img src="img/perfume1.png" alt="Orquídea Selvagem">
+    </div>
+
+    <div class="avaliacao">
+        ★★★★★ <span>(265)</span>
+    </div>
+
+    <h3>Strawberry Pavlova</h3>
+
+    <p class="preco">R$ 60,99</p>
+
+</div>
+
+      <!-- PRODUTO 3 -->
+<div class="produto-card">
+
+    <div class="produto-img">
+        <img src="img/perfume3.png" alt="Orquídea Selvagem">
+    </div>
+
+    <div class="avaliacao">
+        ★★★★★ <span>(132)</span>
+    </div>
+
+    <h3>Lunar Energy</h3>
+
+    <p class="preco">R$ 170,80</p>
+
+</div>
+
+      <!-- PRODUTO 4 -->
+<div class="produto-card">
+
+    <div class="produto-img">
+        <img src="img/perfume4.png" alt="Little Twin Stars">
+    </div>
+
+    <div class="avaliacao">
+        ★★★★★ <span>(32)</span>
+    </div>
+
+    <h3>Little Twin Stars</h3>
+
+    <p class="preco">R$ 169,90</p>
+
+</div>
+
+<div class="produto-card">
+
+    <div class="produto-img">
+        <img src="img/perfume5.png" alt="Little Blossom">
+    </div>
+
+    <div class="avaliacao">
+        ★★★★★ <span>(62)</span>
+    </div>
+
+    <h3>Little Blossom</h3>
+
+    <p class="preco">R$ 149,90</p>
+
+</div>
+
+<div class="produto-card">
+
+    <div class="produto-img">
+        <img src="img/perfume6.png" alt="Essencial Kids">
+    </div>
+
+    <div class="avaliacao">
+        ★★★★★ <span>(82)</span>
+    </div>
+
+    <h3>Essencial Kids</h3>
+
+    <p class="preco">R$ 159,90</p>
+
+</div>
+
+<div class="produto-card">
+
+    <div class="produto-img">
+        <img src="img/perfume7.png" alt="Orquídea Glow">
+    </div>
+
+    <div class="avaliacao">
+        ★★★★★ <span>(42)</span>
+    </div>
+
+    <h3>Orquídea Glow</h3>
+
+    <p class="preco">R$ 109,90</p>
+
+</div>
+
+<div class="produto-card">
+
+    <div class="produto-img">
+        <img src="img/perfume8.png" alt="Lunar Glow">
+    </div>
+
+    <div class="avaliacao">
+        ★★★★★ <span>(22)</span>
+    </div>
+
+    <h3>Lunar Glow</h3>
+
+    <p class="preco">R$ 119,90</p>
+
+</div>
+
+
+
+    </div>
+
+  </section>
+
+  <!-- BOTÃO VOLTAR AO TOPO -->
+  <button id="btnTopo">
+    <i class="fa-solid fa-arrow-up"></i>
+  </button>
+
+  <!-- BOOTSTRAP JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- JAVASCRIPT -->
+  <script src="script.js"></script>
+
+</body>
+</html>
