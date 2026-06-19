@@ -54,8 +54,8 @@
     </div>
 
     <nav>
-        <a href="#">Contato</a>
-        <a href="entrar.php">Login</a>
+            <a href="https://github.com/JuuJap/DivineEssence">Sobre</a>
+        <a href="entrar.php">Entrar</a>
 
         <button id="theme-toggle" onclick="toggleTheme()">
             <span class="icon">🌙</span>

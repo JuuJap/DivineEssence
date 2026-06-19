@@ -32,8 +32,7 @@
         </div>
 
         <nav>
-            <a href="#">Sobre</a>
-            <a href="#">Contato</a>
+            <a href="https://github.com/JuuJap/DivineEssence">Sobre</a>
             <a href="cadastro.php">Criar conta</a>
 
             <!-- Botão de tema -->

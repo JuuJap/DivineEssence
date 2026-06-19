@@ -80,8 +80,6 @@ require_once "proteger.php";
 
   <!-- MENU -->
   <nav class="menu">
-    <a href="#">Promoções</a>
-    <a href="#">Lançamentos</a>
     <a href="#">Femininos</a>
     <a href="#">Infantis</a>
     <a href="#">Masculinos</a>
