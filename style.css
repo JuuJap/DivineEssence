@@ -1014,3 +1014,30 @@ body.login-page{
 .login-page .forgot-password{
  margin-left:10px;
 }
+
+.usuario-area{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.usuario-nome{
+    font-weight:bold;
+    color:var(--texto);
+}
+
+.btn-entrar,
+.btn-sair{
+    text-decoration:none;
+    padding:8px 14px;
+    border-radius:20px;
+    background:#4d4d69;
+    color:white;
+    transition:.3s;
+}
+
+.btn-entrar:hover,
+.btn-sair:hover{
+    transform:scale(1.05);
+    color:white;
+}

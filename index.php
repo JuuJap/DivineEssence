@@ -1,3 +1,7 @@
+<?php
+session_start();
+?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -38,10 +42,32 @@
       <i class="fa-solid fa-magnifying-glass"></i>
     </div>
 
-    <div class="carrinho">
-      <i class="fa-solid fa-cart-shopping"></i>
-      <span>0</span>
-    </div>
+<div class="carrinho">
+  <i class="fa-solid fa-cart-shopping"></i>
+  <span>0</span>
+</div>
+
+<div class="usuario-area">
+
+<?php if(isset($_SESSION["usuario_nome"])): ?>
+
+    <span class="usuario-nome">
+        Olá, <?= htmlspecialchars($_SESSION["usuario_nome"]) ?>
+    </span>
+
+    <a href="logout.php" class="btn-sair">
+        Sair
+    </a>
+
+<?php else: ?>
+
+    <a href="entrar.php" class="btn-entrar">
+        Entrar
+    </a>
+
+<?php endif; ?>
+
+</div>
 
 <div class="tema">
     <button id="btnTema">
