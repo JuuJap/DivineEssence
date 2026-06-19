@@ -28,7 +28,7 @@
         <nav>
             <a href="#">Sobre</a>
             <a href="#">Contato</a>
-            <a href="cadastro.html">Criar conta</a>
+            <a href="cadastro.php">Criar conta</a>
 
             <!-- Botão de tema -->
             <button id="theme-toggle" onclick="toggleTheme()">
@@ -39,18 +39,35 @@
 
     <!-- Conteúdo principal -->
     <main class="main-content">
-        <div class="login-container">
-            <h2>Entrar</h2>
+<div class="login-container">
+    <h2>Entrar</h2>
 
-            <input type="text" placeholder="Usuário">
-            <input type="password" placeholder="Senha">
+    <form action="login_usuario.php" method="POST">
 
-            <button onclick="login()">Entrar</button>
+        <input
+            type="email"
+            name="email"
+            placeholder="E-mail"
+            required
+        >
 
-            <!-- Esqueci senha -->
-            <a href="#" class="forgot-password">Esqueci minha senha</a>
-        </div>
-    </main>
+        <input
+            type="password"
+            name="senha"
+            placeholder="Senha"
+            required
+        >
+
+        <button type="submit">
+            Entrar
+        </button>
+
+    </form>
+
+    <a href="cadastro.php" class="forgot-password">
+        Criar conta
+    </a>
+</div>
 
     <!-- Script -->
     <script src="script.js"></script>
