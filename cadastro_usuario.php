@@ -15,9 +15,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt->execute();
     $resultado = $stmt->get_result();
 
-    if ($resultado->num_rows > 0) {
-        die("Este e-mail já está cadastrado.");
-    }
+if ($resultado->num_rows > 0) {
+    header("Location: cadastro.php?erro=email");
+    exit();
+}
 
     // Criptografa a senha
     $senhaHash = password_hash($senha, PASSWORD_DEFAULT);
@@ -39,6 +40,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit;
     }
 
+    
     echo "Erro ao cadastrar usuário.";
 }
 ?>

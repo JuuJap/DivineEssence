@@ -1040,3 +1040,51 @@ body.login-page{
     transform:scale(1.05);
     color:white;
 }
+
+.erro-login{
+    background:#ff4d6d;
+    color:white;
+    padding:12px;
+    border-radius:8px;
+    margin-bottom:15px;
+    text-align:center;
+}
+
+.toast-erro{
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+
+    background: #ff4d4d;
+    color: white;
+
+    padding: 15px 25px;
+    border-radius: 12px;
+
+    font-size: 18px;
+    font-weight: bold;
+
+    z-index: 9999;
+
+    box-shadow: 0 5px 15px rgba(0,0,0,.2);
+
+    transition: opacity .5s ease;
+
+    animation: aparecer .3s ease;
+}
+
+.toast-erro.sumir{
+    opacity: 0;
+}
+
+@keyframes aparecer{
+    from{
+        opacity: 0;
+        transform: translateX(-50%) translateY(-20px);
+    }
+    to{
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+    }
+}

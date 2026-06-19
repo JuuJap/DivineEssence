@@ -10,31 +10,64 @@
 
 <body class="login-page">
 
-    <div class="background"></div>
+<?php if(isset($_GET['erro']) && $_GET['erro'] == 'email'): ?>
+    <div class="toast-erro">
+        Este e-mail já está cadastrado!
+    </div>
 
-    <header class="header">
-        <img id="logoSite" src="img/LDE-dark2.png" alt="Divine Essence" style="width: 100px; height: auto;">
+    <script>
+        window.addEventListener("load", () => {
 
-        
-        <div class="menu-toggle" onclick="toggleMenu()">
-            <span></span>
-            <span></span>
-            <span></span>
-        </div>
+            const toast = document.querySelector(".toast-erro");
 
-        
-        <nav>
-            <a href="#">Contato</a>
-            <a href="entrar.php">Login</a>
+            if(!toast) return;
 
-            <button id="theme-toggle" onclick="toggleTheme()">
-                <span class="icon">🌙</span>
-            </button>
-        </nav>
-    </header>
+            setTimeout(() => {
+
+                toast.classList.add("sumir");
+
+                setTimeout(() => {
+                    toast.remove();
+                }, 500);
+
+            }, 3000);
+
+        });
+    </script>
+<?php endif; ?>
+
+<div class="background"></div>
+
+<header class="header">
+
+    <img
+        id="logoSite"
+        src="img/LDE-dark2.png"
+        alt="Divine Essence"
+        style="width: 100px; height: auto;"
+    >
+
+    <div class="menu-toggle" onclick="toggleMenu()">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+
+    <nav>
+        <a href="#">Contato</a>
+        <a href="entrar.php">Login</a>
+
+        <button id="theme-toggle" onclick="toggleTheme()">
+            <span class="icon">🌙</span>
+        </button>
+    </nav>
+
+</header>
 
 <main>
+
     <div class="login-container">
+
         <h2>Criar Conta</h2>
 
         <form action="cadastro_usuario.php" method="POST">
@@ -69,10 +102,13 @@
         <a href="entrar.php" class="forgot-password">
             Já tenho conta
         </a>
+
     </div>
+
 </main>
 
-    <script src="script.js"></script>
+<script src="script.js"></script>
+
 
 </body>
 </html>

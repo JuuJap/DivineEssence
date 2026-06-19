@@ -26,10 +26,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_SESSION["usuario_email"] = $usuario["email"];
 
             header("Location: index.php");
-            exit;
+            exit();
         }
     }
 
-    echo "E-mail ou senha incorretos.";
+    // Se chegou aqui, login falhou
+    header("Location: entrar.php?erro=1");
+    exit();
 }
 ?>

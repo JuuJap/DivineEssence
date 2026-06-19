@@ -1,4 +1,5 @@
 
+
 document.addEventListener('DOMContentLoaded',()=>{
 // MENU
 const categorias = document.querySelectorAll(".menu a");

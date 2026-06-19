@@ -11,6 +11,12 @@
 
 <body class="login-page">
 
+<?php if(isset($_GET['erro'])): ?>
+<div id="toastErro" class="toast-erro">
+    E-mail ou senha incorretos!
+</div>
+<?php endif; ?>
+
     <!-- Fundo borrado -->
     <div class="background"></div>
 
@@ -71,6 +77,17 @@
 
     <!-- Script -->
     <script src="script.js"></script>
+
+<?php if(isset($_GET['erro'])): ?>
+<script>
+setTimeout(() => {
+    const toast = document.getElementById("toastErro");
+    if(toast){
+        toast.classList.add("sumir");
+    }
+}, 3000);
+</script>
+<?php endif; ?>
 
 </body>
 </html>
