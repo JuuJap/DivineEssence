@@ -25,7 +25,7 @@
         
         <nav>
             <a href="#">Contato</a>
-            <a href="entrar.html">Login</a>
+            <a href="entrar.php">Login</a>
 
             <button id="theme-toggle" onclick="toggleTheme()">
                 <span class="icon">🌙</span>
@@ -33,19 +33,44 @@
         </nav>
     </header>
 
-    <main>
-        <div class="login-container">
-            <h2>Criar Conta</h2>
+<main>
+    <div class="login-container">
+        <h2>Criar Conta</h2>
 
-            <input type="text" placeholder="Usuário" id="username">
-            <input type="password" placeholder="Senha" id="password">
-            <input type="password" placeholder="Confirmar senha" id="confirmPassword">
+        <form action="cadastro_usuario.php" method="POST">
 
-            <button onclick="criarConta()">Cadastrar</button>
+            <input
+                type="text"
+                name="nome"
+                placeholder="Nome de usuário"
+                required
+            >
 
-            <a href="entrar.html" class="forgot-password">Já tenho conta</a>
-        </div>
-    </main>
+            <input
+                type="email"
+                name="email"
+                placeholder="E-mail"
+                required
+            >
+
+            <input
+                type="password"
+                name="senha"
+                placeholder="Senha"
+                required
+            >
+
+            <button type="submit">
+                Cadastrar
+            </button>
+
+        </form>
+
+        <a href="entrar.php" class="forgot-password">
+            Já tenho conta
+        </a>
+    </div>
+</main>
 
     <script src="script.js"></script>
 
