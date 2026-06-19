@@ -51,14 +51,16 @@ function trocarLogo(novaLogo){
 if(localStorage.getItem("tema") === "dark"){
 
     document.body.classList.add("dark-mode");
-
-    logoSite.src = "img/LDE-dark.png";
+    logoSite.src = "img/LDE-dark2.png";
 
 }else{
 
-    logoSite.src = "img/LDE.png";
+    logoSite.src = "img/LDE2.png";
 
 }
+
+logoSite.style.height = "120px";
+logoSite.style.width = "auto";
 
 btnTema.addEventListener("click", () => {
 
@@ -70,13 +72,13 @@ btnTema.addEventListener("click", () => {
 
         localStorage.setItem("tema", "dark");
 
-        trocarLogo("img/LDE-dark.png");
+        trocarLogo("img/LDE-dark2.png");
 
     }else{
 
         localStorage.setItem("tema", "light");
 
-        trocarLogo("img/LDE.png");
+        trocarLogo("img/LDE2.png");
 
     }
 
