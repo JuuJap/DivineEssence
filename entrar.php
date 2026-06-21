@@ -75,7 +75,7 @@
 </div>
 
     <!-- Script -->
-    <script src="script.js"></script>
+<script src="script.js?v=4"></script>
 
 <?php if(isset($_GET['erro'])): ?>
 <script>

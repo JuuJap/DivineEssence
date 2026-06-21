@@ -1,102 +1,106 @@
 # Divine Essence
 
-Divine Essence é uma loja virtual fictícia de perfumes desenvolvida para fins acadêmicos, utilizando HTML, CSS, JavaScript, PHP e MySQL.
-
-O projeto simula um e-commerce moderno, contendo sistema de autenticação de usuários, tema claro/escuro, catálogo de produtos e integração com banco de dados.
+**Divine Essence** é uma loja virtual fictícia de perfumes desenvolvida para fins acadêmicos.
+O projeto simula um e-commerce com cadastro de usuários, login, catálogo de produtos, carrinho de compras, checkout, histórico de pedidos, tema claro/escuro e painel administrativo.
 
 ---
 
-## Funcionalidades
+## Autores
 
-### Sistema de Usuários
-
-- Cadastro de usuários
-- Login com autenticação
-- Senhas criptografadas com `password_hash()`
-- Sessões PHP
-- Logout seguro
-- Exibição do usuário logado
-
-### Interface
-
-- Tema Claro
-- Tema Escuro
-- Troca automática de logotipo conforme o tema
-- Layout responsivo
-- Menu adaptável para dispositivos móveis
-
-### Loja Virtual
-
-- Catálogo de perfumes
-- Carrossel de banners
-- Coleções destacadas
-- Sistema de avaliação visual
-- Barra de pesquisa
-- Carrinho (estrutura preparada)
+- [Julio Aparecido](https://github.com/JuuJap)
+- [Julio Cesar](https://github.com/CesarNSR)
+- [Lucca Cruz](https://github.com/Grey-90)
+- [Andrew Henrique](https://github.com/AndrewKinynubis)
 
 ---
 
 ## Tecnologias Utilizadas
 
-### Front-end
-
-- HTML5
-- CSS3
-- JavaScript
-- Bootstrap 5
-- Font Awesome
-
-### Back-end
-
-- PHP
-
-### Banco de Dados
-
-- MySQL
-- phpMyAdmin
-
-### Ambiente de Desenvolvimento
-
-- XAMPP
+* HTML5
+* CSS3
+* JavaScript
+* PHP
+* MySQL
+* Bootstrap
+* Font Awesome
+* XAMPP
+* phpMyAdmin
 
 ---
 
-## Estrutura do Projeto
+## Funcionalidades
+
+### Usuário
+
+* Cadastro de conta
+* Login e logout
+* Senhas criptografadas
+* Sessão de usuário
+* Visualização de produtos
+* Adição de produtos ao carrinho
+* Finalização de compras
+* Histórico de pedidos
+
+### Loja
+
+* Catálogo de perfumes
+* Página individual de produto
+* Filtro por categoria
+* Barra de pesquisa
+* Carrinho de compras
+* Checkout
+* Tema claro e escuro
+* Layout responsivo
+
+### Administrador
+
+* Acesso a painel administrativo
+* Cadastro de novos produtos
+* Upload de imagem do produto
+* Edição de produtos
+* Remoção de produtos da loja
+* Reativação de produtos removidos
+
+---
+
+## Estrutura Principal
 
 ```text
 DivineEssence/
 │
 ├── img/
-│
 ├── index.php
+├── produto.php
+├── carrinho.php
+├── checkout.php
+├── meus_pedidos.php
+├── detalhe_pedido.php
+├── admin_produtos.php
 ├── entrar.php
 ├── cadastro.php
-│
 ├── conexao.php
-├── cadastro_usuario.php
-├── login_usuario.php
-├── logout.php
-├── proteger.php
-│
 ├── script.js
 ├── style.css
-│
+├── ecommerce.css
+├── database.sql
 └── README.md
 ```
 
 ---
 
-## Configuração do Ambiente
+## Como Instalar
 
-### 1. Instalar o XAMPP
+### 1. Baixar o projeto
 
-Baixe e instale o XAMPP:
+Baixe o projeto pelo GitHub ou clone o repositório:
 
-https://www.apachefriends.org/
+```bash
+git clone URL_DO_REPOSITORIO
+```
 
 ---
 
-### 2. Mover o Projeto
+### 2. Colocar no XAMPP
 
 Copie a pasta do projeto para:
 
@@ -104,7 +108,7 @@ Copie a pasta do projeto para:
 C:\xampp\htdocs\
 ```
 
-Ficando:
+A pasta deve ficar assim:
 
 ```text
 C:\xampp\htdocs\DivineEssence
@@ -112,190 +116,141 @@ C:\xampp\htdocs\DivineEssence
 
 ---
 
-### 3. Iniciar Serviços
+### 3. Iniciar o XAMPP
 
-Abra o XAMPP Control Panel e inicie:
+Abra o XAMPP e inicie:
 
-- Apache
-- MySQL
+```text
+Apache
+MySQL
+```
 
 ---
 
-## Configuração do Banco de Dados
+### 4. Importar o banco de dados
 
-Abra:
+Abra o phpMyAdmin:
 
 ```text
 http://localhost/phpmyadmin
 ```
 
-Clique em **SQL** e execute:
+Depois importe o arquivo:
 
-```sql
-CREATE DATABASE divine_essence;
-
-USE divine_essence;
-
-CREATE TABLE usuarios (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    nome VARCHAR(100) NOT NULL,
-    email VARCHAR(150) NOT NULL UNIQUE,
-    senha VARCHAR(255) NOT NULL,
-    criado_em TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
+```text
+database.sql
 ```
+
+Esse arquivo cria o banco `divine_essence`, as tabelas necessárias e os produtos iniciais.
 
 ---
 
-## Configuração da Conexão
+### 5. Conferir a conexão
 
-Arquivo:
-
-```text
-conexao.php
-```
+O arquivo `conexao.php` deve estar configurado assim:
 
 ```php
-<?php
-
 $host = "localhost";
 $usuario = "root";
 $senha = "";
 $banco = "divine_essence";
-
-$conn = new mysqli($host, $usuario, $senha, $banco);
-
-if ($conn->connect_error) {
-    die("Erro na conexão: " . $conn->connect_error);
-}
-
-$conn->set_charset("utf8");
-?>
 ```
+
+Caso seu MySQL tenha senha, altere a variável `$senha`.
 
 ---
 
-## Executando o Projeto
+## Como Executar
 
-Após iniciar Apache e MySQL:
+Depois de configurar o banco e iniciar o XAMPP, acesse:
 
 ```text
 http://localhost/DivineEssence/
 ```
 
----
-
-## Páginas Disponíveis
-
-### Página Inicial
-
-```text
-http://localhost/DivineEssence/
-```
-
-ou
+ou:
 
 ```text
 http://localhost/DivineEssence/index.php
 ```
 
-### Login
+---
 
-```text
-http://localhost/DivineEssence/entrar.php
-```
+## Como Criar um Administrador
 
-### Cadastro
+Primeiro, cadastre um usuário normalmente pelo site:
 
 ```text
 http://localhost/DivineEssence/cadastro.php
 ```
 
----
+Depois, no phpMyAdmin, execute:
 
-## Sistema de Segurança
+```sql
+USE divine_essence;
 
-O sistema utiliza:
-
-### Criptografia de Senha
-
-```php
-password_hash()
+UPDATE usuarios
+SET tipo = 'admin'
+WHERE email = 'SEU_EMAIL_AQUI';
 ```
 
-### Validação
-
-```php
-password_verify()
-```
-
-### Sessões
-
-```php
-$_SESSION
-```
-
-### Proteção de Rotas
-
-```php
-require_once("proteger.php");
-```
-
-Impedindo que usuários não autenticados acessem páginas protegidas.
+Após isso, faça logout e login novamente.
+O botão **Admin** aparecerá no site.
 
 ---
 
-## Sistema de Temas
+## Páginas Principais
 
-O projeto possui:
-
-### Tema Claro
-
-- Logo: `LDE2.png`
-
-### Tema Escuro
-
-- Logo: `LDE-dark2.png`
-
-A preferência do usuário é salva utilizando:
-
-```javascript
-localStorage
-```
+| Página               | Função                 |
+| -------------------- | ---------------------- |
+| `index.php`          | Página inicial da loja |
+| `produto.php`        | Detalhes de um produto |
+| `carrinho.php`       | Carrinho de compras    |
+| `checkout.php`       | Finalização da compra  |
+| `meus_pedidos.php`   | Histórico de pedidos   |
+| `admin_produtos.php` | Painel administrativo  |
+| `entrar.php`         | Login                  |
+| `cadastro.php`       | Cadastro de usuário    |
 
 ---
 
-## Autor
+## Painel Administrativo
 
-Julio Aparecido Barcelos Rodrigues
+O painel administrativo permite que o usuário admin gerencie os produtos pelo próprio site.
 
-Projeto desenvolvido para fins acadêmicos com o objetivo de aplicar conceitos de:
+No painel é possível:
 
-- Desenvolvimento Web
-- Front-end
-- Back-end
-- Banco de Dados
-- Autenticação de Usuários
-- Sessões PHP
+* adicionar produto;
+* enviar imagem;
+* editar informações;
+* remover produto da loja;
+* reativar produto removido.
+
+Produtos removidos não são apagados do banco.
+Eles apenas deixam de aparecer na loja.
+
+---
+
+## Observações
+
+* O banco de dados usado é `divine_essence`.
+* O arquivo `database.sql` deve ser importado antes de usar o site.
+* As imagens principais ficam na pasta `img/`.
+* Produtos cadastrados pelo painel podem ser salvos em `img/produtos/`.
+* Para acessar áreas protegidas, o usuário precisa estar logado.
+* Para acessar o painel administrativo, o usuário precisa ter `tipo = 'admin'`.
 
 ---
 
 ## Status do Projeto
 
-Concluído:
+Projeto concluído para fins acadêmicos, com funcionalidades principais de um e-commerce:
 
-- Sistema de Login
-- Sistema de Cadastro
-- Banco de Dados
-- Sessões PHP
-- Tema Claro/Escuro
-- Responsividade
-
-Em desenvolvimento:
-
-- Carrinho de Compras
-
-Planejado:
-
-- Painel Administrativo
-- Integração Completa de Produtos
+* login;
+* cadastro;
+* catálogo;
+* carrinho;
+* checkout;
+* pedidos;
+* painel administrativo;
+* tema claro/escuro.
