@@ -9,6 +9,7 @@ O projeto simula um e-commerce com cadastro de usuários, login, catálogo de pe
 
 - [Julio Aparecido](https://github.com/JuuJap)
 - [Julio Cesar](https://github.com/CesarNSR)
+- [Matheus Bassi](https://github.com/Bassi1711)
 - [Lucca Cruz](https://github.com/Grey-90)
 - [Andrew Henrique](https://github.com/AndrewKinynubis)
 
