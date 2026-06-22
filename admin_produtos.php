@@ -244,10 +244,16 @@ $tipoSelecionado = ($produtoEditar && $produtoEditar["categoria"] === "Kits") ? 
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Produtos | Divine Essence</title>
 
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    >
+
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="ecommerce.css?v=8">
+    <link rel="stylesheet" href="ecommerce.css?v=10">
 
     <link
         rel="stylesheet"
@@ -263,6 +269,13 @@ $tipoSelecionado = ($produtoEditar && $produtoEditar["categoria"] === "Kits") ? 
         </a>
     </div>
 
+    <form class="barra-pesquisa" method="GET" action="index.php">
+        <input type="text" name="busca" placeholder="Buscar produto">
+        <button type="submit" style="border:none;background:none;">
+            <i class="fa-solid fa-magnifying-glass"></i>
+        </button>
+    </form>
+
     <a href="carrinho.php" class="carrinho">
         <i class="fa-solid fa-cart-shopping"></i>
         <span><?= $qtdCarrinho ?></span>
@@ -270,10 +283,10 @@ $tipoSelecionado = ($produtoEditar && $produtoEditar["categoria"] === "Kits") ? 
 
     <div class="usuario-area">
         <span class="usuario-nome">
-            Admin: <?= htmlspecialchars($_SESSION["usuario_nome"]) ?>
+            Olá, <?= htmlspecialchars($_SESSION["usuario_nome"]) ?>
         </span>
 
-        <a href="index.php" class="btn-entrar">Loja</a>
+        <a href="admin_produtos.php" class="btn-entrar">Admin</a>
         <a href="meus_pedidos.php" class="btn-entrar">Pedidos</a>
         <a href="logout.php" class="btn-sair">Sair</a>
     </div>
@@ -286,9 +299,10 @@ $tipoSelecionado = ($produtoEditar && $produtoEditar["categoria"] === "Kits") ? 
 </header>
 
 <nav class="menu">
-    <a href="index.php">Início</a>
-    <a href="admin_produtos.php">Produtos e Kits</a>
-    <a href="meus_pedidos.php">Meus pedidos</a>
+    <a href="index.php?categoria=Femininos">Femininos</a>
+    <a href="index.php?categoria=Masculinos">Masculinos</a>
+    <a href="index.php?categoria=Kits">Kits</a>
+    <a href="carrinho.php">Carrinho</a>
 </nav>
 
 <main class="pagina-loja">

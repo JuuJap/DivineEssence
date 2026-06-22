@@ -1,8 +1,8 @@
 :root{
-    --bg: #e18888;
+    --bg: #ffffff;
     --header: #f38989;
     --menu: #f3a2a8;
-    --texto: #000;
+    --texto: #111111;
     --card: #ffffff;
 }
 
@@ -1866,4 +1866,80 @@ a {
     .grid-kits {
         grid-template-columns: 1fr !important;
     }
+}
+
+body {
+    background: var(--bg) !important;
+}
+
+/* Mantém apenas topo e menu em rosa no tema claro */
+.topo {
+    background: var(--header) !important;
+}
+
+.menu {
+    background: var(--menu) !important;
+}
+
+/* Deixa as seções com fundo branco/transparente */
+.colecoes,
+.produtos,
+.kits-section,
+.pagina-loja {
+    background: transparent !important;
+}
+
+/* Cards brancos no tema claro */
+.produto-card,
+.box-loja,
+.produto-info,
+.produto-foto {
+    background: #ffffff !important;
+    color: #111111 !important;
+}
+
+/* Títulos em preto no tema claro */
+.titulo-colecoes,
+.topo-produtos h2,
+.produto-card h3,
+.preco {
+    color: #111111 !important;
+}
+
+/* Detalhes em rosa */
+.topo-produtos a,
+.btn-loja,
+.btn-card-carrinho:hover {
+    background: #e54868 !important;
+    color: white !important;
+}
+
+/* Botões principais */
+.btn-card-carrinho {
+    background: #4d4d69 !important;
+    color: white !important;
+}
+
+/* Tema escuro continua escuro */
+.dark-mode {
+    --bg: #0b1220;
+    --header: #111827;
+    --menu: #1e293b;
+    --texto: #ffffff;
+    --card: #334155;
+}
+
+.dark-mode .produto-card,
+.dark-mode .box-loja,
+.dark-mode .produto-info,
+.dark-mode .produto-foto {
+    background: var(--card) !important;
+    color: var(--texto) !important;
+}
+
+.dark-mode .titulo-colecoes,
+.dark-mode .topo-produtos h2,
+.dark-mode .produto-card h3,
+.dark-mode .preco {
+    color: var(--texto) !important;
 }
