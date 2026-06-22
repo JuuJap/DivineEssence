@@ -710,6 +710,15 @@ a {
     gap: 10px !important;
 }
 
+.form-acao-admin {
+    margin: 0 !important;
+}
+
+.form-acao-admin .btn-loja,
+.form-acao-admin .btn-secundario {
+    border: none;
+}
+
 .status-ativo {
     color: #00e676 !important;
 }

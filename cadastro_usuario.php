@@ -35,6 +35,7 @@ if ($resultado->num_rows > 0) {
         $_SESSION["usuario_id"] = $conn->insert_id;
         $_SESSION["usuario_nome"] = $nome;
         $_SESSION["usuario_email"] = $email;
+        $_SESSION["usuario_tipo"] = "cliente";
 
         header("Location: index.php");
         exit;

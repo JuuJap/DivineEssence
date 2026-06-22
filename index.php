@@ -105,7 +105,6 @@ $produtos = $stmt->get_result();
 
 <nav class="menu">
     <a href="index.php?categoria=Femininos">Femininos</a>
-    <a href="index.php?categoria=Infantis">Infantis</a>
     <a href="index.php?categoria=Masculinos">Masculinos</a>
     <a href="carrinho.php">Carrinho</a>
 </nav>
@@ -117,7 +116,6 @@ $produtos = $stmt->get_result();
             <button type="button" data-bs-target="#bannerPrincipal" data-bs-slide-to="0" class="active"></button>
             <button type="button" data-bs-target="#bannerPrincipal" data-bs-slide-to="1"></button>
             <button type="button" data-bs-target="#bannerPrincipal" data-bs-slide-to="2"></button>
-            <button type="button" data-bs-target="#bannerPrincipal" data-bs-slide-to="3"></button>
         </div>
 
         <div class="carousel-inner">
@@ -133,9 +131,6 @@ $produtos = $stmt->get_result();
                 <div class="banner banner3"></div>
             </div>
 
-            <div class="carousel-item">
-                <div class="banner banner4"></div>
-            </div>
         </div>
 
         <button class="carousel-control-prev" type="button" data-bs-target="#bannerPrincipal" data-bs-slide="prev">
@@ -158,10 +153,6 @@ $produtos = $stmt->get_result();
 
         <a href="index.php?categoria=Femininos" class="colecao-card">
             <img src="img/colecao2.jpg" alt="Coleção Nature">
-        </a>
-
-        <a href="index.php?categoria=Infantis" class="colecao-card">
-            <img src="img/colecao3.png" alt="Coleção Infantil">
         </a>
     </div>
 </section>

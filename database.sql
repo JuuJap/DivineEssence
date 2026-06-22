@@ -76,14 +76,20 @@ CREATE TABLE IF NOT EXISTS itens_pedido (
 
 -- ============================================================
 -- Produtos iniciais
--- O INSERT abaixo evita duplicação caso o script seja executado novamente
+-- A loja trabalha apenas com perfumes adultos femininos e masculinos.
+-- O UPDATE abaixo remove da vitrine produtos antigos fora do catálogo atual.
 -- ============================================================
+
+UPDATE produtos
+SET ativo = 0
+WHERE categoria NOT IN ('Femininos', 'Masculinos')
+   OR id BETWEEN 4 AND 8;
 
 INSERT INTO produtos 
 (nome, descricao, preco, preco_antigo, imagem, categoria, estoque, avaliacao_qtd, ativo)
 SELECT
     'Orquídea Silvestre',
-    'Fragrância floral sofisticada, inspirada na delicadeza das orquídeas e no frescor da natureza.',
+    'Perfume feminino adulto com fragrância floral sofisticada, inspirado na delicadeza das orquídeas e no frescor da natureza.',
     149.90,
     189.90,
     'img/perfume2.png',
@@ -99,7 +105,7 @@ INSERT INTO produtos
 (nome, descricao, preco, preco_antigo, imagem, categoria, estoque, avaliacao_qtd, ativo)
 SELECT
     'Strawberry Pavlova',
-    'Fragrância doce, marcante e delicada, com notas inspiradas em frutas vermelhas e baunilha.',
+    'Perfume feminino adulto doce, marcante e delicado, com notas inspiradas em frutas vermelhas e baunilha.',
     60.99,
     79.99,
     'img/perfume1.png',
@@ -115,7 +121,7 @@ INSERT INTO produtos
 (nome, descricao, preco, preco_antigo, imagem, categoria, estoque, avaliacao_qtd, ativo)
 SELECT
     'Lunar Energy',
-    'Perfume masculino intenso, misterioso e marcante, inspirado no brilho da noite.',
+    'Perfume masculino adulto intenso, misterioso e marcante, inspirado no brilho da noite.',
     170.80,
     210.00,
     'img/perfume3.png',
@@ -125,86 +131,6 @@ SELECT
     1
 WHERE NOT EXISTS (
     SELECT 1 FROM produtos WHERE nome = 'Lunar Energy'
-);
-
-INSERT INTO produtos 
-(nome, descricao, preco, preco_antigo, imagem, categoria, estoque, avaliacao_qtd, ativo)
-SELECT
-    'Little Twin Stars',
-    'Perfume infantil doce e encantador, perfeito para momentos especiais.',
-    169.90,
-    199.90,
-    'img/perfume4.png',
-    'Infantis',
-    25,
-    32,
-    1
-WHERE NOT EXISTS (
-    SELECT 1 FROM produtos WHERE nome = 'Little Twin Stars'
-);
-
-INSERT INTO produtos 
-(nome, descricao, preco, preco_antigo, imagem, categoria, estoque, avaliacao_qtd, ativo)
-SELECT
-    'Little Blossom',
-    'Perfume infantil floral, delicado e divertido, inspirado em sonhos e magia.',
-    149.90,
-    179.90,
-    'img/perfume5.png',
-    'Infantis',
-    18,
-    62,
-    1
-WHERE NOT EXISTS (
-    SELECT 1 FROM produtos WHERE nome = 'Little Blossom'
-);
-
-INSERT INTO produtos 
-(nome, descricao, preco, preco_antigo, imagem, categoria, estoque, avaliacao_qtd, ativo)
-SELECT
-    'Essencial Kids',
-    'Colônia infantil suave, alegre e perfeita para o uso diário.',
-    159.90,
-    189.90,
-    'img/perfume6.png',
-    'Infantis',
-    22,
-    82,
-    1
-WHERE NOT EXISTS (
-    SELECT 1 FROM produtos WHERE nome = 'Essencial Kids'
-);
-
-INSERT INTO produtos 
-(nome, descricao, preco, preco_antigo, imagem, categoria, estoque, avaliacao_qtd, ativo)
-SELECT
-    'Orquídea Glow',
-    'Minikit de beleza com inspiração floral, brilho delicado e toque sofisticado.',
-    109.90,
-    139.90,
-    'img/perfume7.png',
-    'Femininos',
-    12,
-    42,
-    1
-WHERE NOT EXISTS (
-    SELECT 1 FROM produtos WHERE nome = 'Orquídea Glow'
-);
-
-INSERT INTO produtos 
-(nome, descricao, preco, preco_antigo, imagem, categoria, estoque, avaliacao_qtd, ativo)
-SELECT
-    'Lunar Glow',
-    'Minikit de maquiagem com brilho lunar, elegante e moderno.',
-    119.90,
-    149.90,
-    'img/perfume8.png',
-    'Masculinos',
-    10,
-    22,
-    1
-WHERE NOT EXISTS (
-    SELECT 1 FROM produtos WHERE nome = 'Lunar Glow'
 );
 
 -- ============================================================

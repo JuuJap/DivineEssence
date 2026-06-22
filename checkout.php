@@ -10,7 +10,7 @@ if (empty($carrinho)) {
 }
 
 $ids = array_map("intval", array_keys($carrinho));
-$sql = "SELECT * FROM produtos WHERE id IN (" . implode(",", $ids) . ")";
+$sql = "SELECT * FROM produtos WHERE ativo = 1 AND id IN (" . implode(",", $ids) . ")";
 $resultado = $conn->query($sql);
 
 $itens = [];
@@ -30,6 +30,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $email = trim($_POST["email"]);
     $endereco = trim($_POST["endereco"]);
     $pagamento = trim($_POST["pagamento"]);
+
+    if ($nome === "" || $email === "" || $endereco === "" || $pagamento === "") {
+        die("Preencha todos os campos para finalizar o pedido.");
+    }
 
     $conn->begin_transaction();
 
@@ -54,10 +58,17 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $stmtEstoque = $conn->prepare("
             UPDATE produtos 
             SET estoque = estoque - ? 
-            WHERE id = ? AND estoque >= ?
+            WHERE id = ? AND estoque >= ? AND ativo = 1
         ");
 
         foreach ($itens as $item) {
+            $stmtEstoque->bind_param("iii", $item["quantidade"], $item["id"], $item["quantidade"]);
+            $stmtEstoque->execute();
+
+            if ($stmtEstoque->affected_rows === 0) {
+                throw new Exception("Estoque insuficiente para o produto: " . $item["nome"]);
+            }
+
             $stmtItem->bind_param(
                 "iisdiis",
                 $pedidoId,
@@ -70,9 +81,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             );
 
             $stmtItem->execute();
-
-            $stmtEstoque->bind_param("iii", $item["quantidade"], $item["id"], $item["quantidade"]);
-            $stmtEstoque->execute();
         }
 
         $conn->commit();

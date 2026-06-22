@@ -11,6 +11,20 @@ if (!is_dir($pastaUpload)) {
     mkdir($pastaUpload, 0777, true);
 }
 
+if (empty($_SESSION["csrf_token"])) {
+    $_SESSION["csrf_token"] = bin2hex(random_bytes(32));
+}
+
+function validarTokenCSRF() {
+    if (
+        empty($_POST["csrf_token"]) ||
+        empty($_SESSION["csrf_token"]) ||
+        !hash_equals($_SESSION["csrf_token"], $_POST["csrf_token"])
+    ) {
+        die("Ação inválida. Atualize a página e tente novamente.");
+    }
+}
+
 function salvarImagem($campo, $pastaUpload) {
     if (!isset($_FILES[$campo]) || $_FILES[$campo]["error"] !== UPLOAD_ERR_OK) {
         return null;
@@ -18,14 +32,26 @@ function salvarImagem($campo, $pastaUpload) {
 
     $arquivo = $_FILES[$campo];
     $extensao = strtolower(pathinfo($arquivo["name"], PATHINFO_EXTENSION));
+    $tamanhoMaximo = 3 * 1024 * 1024;
 
-    $permitidas = ["jpg", "jpeg", "png", "webp"];
+    $permitidas = [
+        "jpg" => "image/jpeg",
+        "jpeg" => "image/jpeg",
+        "png" => "image/png",
+        "webp" => "image/webp"
+    ];
 
-    if (!in_array($extensao, $permitidas)) {
+    if (!isset($permitidas[$extensao]) || $arquivo["size"] > $tamanhoMaximo) {
         return null;
     }
 
-    $novoNome = uniqid("produto_") . "." . $extensao;
+    $dadosImagem = getimagesize($arquivo["tmp_name"]);
+
+    if ($dadosImagem === false || ($dadosImagem["mime"] ?? "") !== $permitidas[$extensao]) {
+        return null;
+    }
+
+    $novoNome = uniqid("produto_", true) . "." . $extensao;
     $destino = $pastaUpload . $novoNome;
 
     if (move_uploaded_file($arquivo["tmp_name"], $destino)) {
@@ -52,6 +78,8 @@ if (isset($_GET["editar"])) {
    CADASTRAR PRODUTO
 ========================= */
 if (isset($_POST["acao"]) && $_POST["acao"] === "cadastrar") {
+    validarTokenCSRF();
+
     $nome = trim($_POST["nome"]);
     $descricao = trim($_POST["descricao"]);
     $preco = floatval(str_replace(",", ".", $_POST["preco"]));
@@ -95,6 +123,8 @@ if (isset($_POST["acao"]) && $_POST["acao"] === "cadastrar") {
    ATUALIZAR PRODUTO
 ========================= */
 if (isset($_POST["acao"]) && $_POST["acao"] === "editar") {
+    validarTokenCSRF();
+
     $id = intval($_POST["id"]);
     $nome = trim($_POST["nome"]);
     $descricao = trim($_POST["descricao"]);
@@ -143,30 +173,20 @@ if (isset($_POST["acao"]) && $_POST["acao"] === "editar") {
 }
 
 /* =========================
-   REMOVER DA LOJA
+   REMOVER OU REATIVAR PRODUTO
 ========================= */
-if (isset($_GET["remover"])) {
-    $id = intval($_GET["remover"]);
+if (isset($_POST["acao"]) && in_array($_POST["acao"], ["remover", "ativar"], true)) {
+    validarTokenCSRF();
 
-    $stmt = $conn->prepare("UPDATE produtos SET ativo = 0 WHERE id = ?");
-    $stmt->bind_param("i", $id);
+    $id = intval($_POST["id"]);
+    $ativo = $_POST["acao"] === "ativar" ? 1 : 0;
+
+    $stmt = $conn->prepare("UPDATE produtos SET ativo = ? WHERE id = ?");
+    $stmt->bind_param("ii", $ativo, $id);
     $stmt->execute();
 
-    header("Location: admin_produtos.php?msg=removido");
-    exit;
-}
-
-/* =========================
-   REATIVAR PRODUTO
-========================= */
-if (isset($_GET["ativar"])) {
-    $id = intval($_GET["ativar"]);
-
-    $stmt = $conn->prepare("UPDATE produtos SET ativo = 1 WHERE id = ?");
-    $stmt->bind_param("i", $id);
-    $stmt->execute();
-
-    header("Location: admin_produtos.php?msg=ativado");
+    $msg = $ativo ? "ativado" : "removido";
+    header("Location: admin_produtos.php?msg=" . $msg);
     exit;
 }
 
@@ -264,6 +284,7 @@ $qtdCarrinho = array_sum($_SESSION["carrinho"] ?? []);
         <?php endif; ?>
 
         <form method="POST" enctype="multipart/form-data" class="form-admin-produto">
+            <input type="hidden" name="csrf_token" value="<?= $_SESSION["csrf_token"] ?>">
 
             <?php if ($produtoEditar): ?>
                 <input type="hidden" name="acao" value="editar">
@@ -290,7 +311,7 @@ $qtdCarrinho = array_sum($_SESSION["carrinho"] ?? []);
                         <option value="">Selecione</option>
 
                         <?php
-                        $categorias = ["Femininos", "Masculinos", "Infantis"];
+                        $categorias = ["Femininos", "Masculinos"];
                         foreach ($categorias as $cat):
                             $selecionado = ($produtoEditar && $produtoEditar["categoria"] === $cat) ? "selected" : "";
                         ?>
@@ -417,20 +438,23 @@ $qtdCarrinho = array_sum($_SESSION["carrinho"] ?? []);
                     </a>
 
                     <?php if ($produto["ativo"]): ?>
-                        <a 
-                            href="admin_produtos.php?remover=<?= $produto["id"] ?>" 
-                            class="btn-secundario"
-                            onclick="return confirm('Remover este produto da loja?')"
-                        >
-                            Remover
-                        </a>
+                        <form method="POST" class="form-acao-admin" onsubmit="return confirm('Remover este produto da loja?')">
+                            <input type="hidden" name="csrf_token" value="<?= $_SESSION["csrf_token"] ?>">
+                            <input type="hidden" name="acao" value="remover">
+                            <input type="hidden" name="id" value="<?= $produto["id"] ?>">
+                            <button type="submit" class="btn-secundario">
+                                Remover
+                            </button>
+                        </form>
                     <?php else: ?>
-                        <a 
-                            href="admin_produtos.php?ativar=<?= $produto["id"] ?>" 
-                            class="btn-loja"
-                        >
-                            Reativar
-                        </a>
+                        <form method="POST" class="form-acao-admin">
+                            <input type="hidden" name="csrf_token" value="<?= $_SESSION["csrf_token"] ?>">
+                            <input type="hidden" name="acao" value="ativar">
+                            <input type="hidden" name="id" value="<?= $produto["id"] ?>">
+                            <button type="submit" class="btn-loja">
+                                Reativar
+                            </button>
+                        </form>
                     <?php endif; ?>
 
                 </div>

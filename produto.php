@@ -57,7 +57,6 @@ $qtdCarrinho = array_sum($_SESSION["carrinho"] ?? []);
 <nav class="menu">
     <a href="index.php">Início</a>
     <a href="index.php?categoria=Femininos">Femininos</a>
-    <a href="index.php?categoria=Infantis">Infantis</a>
     <a href="index.php?categoria=Masculinos">Masculinos</a>
 </nav>
 

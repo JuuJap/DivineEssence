@@ -1,7 +1,7 @@
 # Divine Essence
 
-**Divine Essence** é uma loja virtual fictícia de perfumes desenvolvida para fins acadêmicos.
-O projeto simula um e-commerce com cadastro de usuários, login, catálogo de produtos, carrinho de compras, checkout, histórico de pedidos, tema claro/escuro e painel administrativo.
+**Divine Essence** é uma loja virtual fictícia de perfumes adultos desenvolvida para fins acadêmicos.
+O projeto simula um e-commerce com cadastro de usuários, login, catálogo de perfumes femininos e masculinos, carrinho de compras, checkout, histórico de pedidos, tema claro/escuro e painel administrativo.
 
 ---
 
@@ -43,7 +43,8 @@ O projeto simula um e-commerce com cadastro de usuários, login, catálogo de pr
 
 ### Loja
 
-* Catálogo de perfumes
+* Catálogo de perfumes adultos
+* Categorias Femininos e Masculinos
 * Página individual de produto
 * Filtro por categoria
 * Barra de pesquisa
@@ -95,7 +96,7 @@ DivineEssence/
 Baixe o projeto pelo GitHub ou clone o repositório:
 
 ```bash
-git clone URL_DO_REPOSITORIO
+git clone https://github.com/JuuJap/DivineEssence.git
 ```
 
 ---
@@ -237,6 +238,7 @@ Eles apenas deixam de aparecer na loja.
 * O arquivo `database.sql` deve ser importado antes de usar o site.
 * As imagens principais ficam na pasta `img/`.
 * Produtos cadastrados pelo painel podem ser salvos em `img/produtos/`.
+* A loja trabalha apenas com perfumes adultos femininos e masculinos.
 * Para acessar áreas protegidas, o usuário precisa estar logado.
 * Para acessar o painel administrativo, o usuário precisa ter `tipo = 'admin'`.
 
