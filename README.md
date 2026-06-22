@@ -1,7 +1,7 @@
 # Divine Essence
 
 **Divine Essence** é uma loja virtual fictícia de perfumes desenvolvida para fins acadêmicos.  
-O projeto simula um e-commerce com cadastro de usuários, login, catálogo de perfumes e kits, carrinho de compras, checkout, histórico de pedidos, tema claro/escuro e painel administrativo.
+O projeto simula um e-commerce com cadastro de usuários, login, catálogo de perfumes, kit especial, carrinho de compras, checkout, histórico de pedidos, tema claro/escuro e painel administrativo.
 
 ---
 
@@ -36,15 +36,14 @@ O projeto simula um e-commerce com cadastro de usuários, login, catálogo de pe
 - Login e logout
 - Senhas criptografadas
 - Sessão de usuário
-- Visualização de perfumes e kits
+- Visualização dos perfumes e do kit disponível
 - Adição de produtos ao carrinho
 - Finalização de compras
 - Histórico de pedidos
 
 ### Loja
 
-- Catálogo de perfumes
-- Área exclusiva de kits
+- Catálogo com os produtos principais da Divine Essence
 - Página individual de produto
 - Filtro por categoria
 - Barra de pesquisa
@@ -61,6 +60,23 @@ O projeto simula um e-commerce com cadastro de usuários, login, catálogo de pe
 - Edição de perfumes e kits
 - Remoção de produtos da loja
 - Reativação de produtos removidos
+
+---
+
+## Produtos iniciais do banco
+
+Ao importar o arquivo `database.sql`, o sistema cria somente os seguintes produtos:
+
+```text
+Strawberry Pavlova
+Orquidea Silvestre
+Lunar Energy
+Kit Trio Divine Essence
+```
+
+Nenhum perfume infantil, maquiagem ou produto extra deve aparecer na loja inicial.
+
+Caso apareçam produtos antigos, importe novamente o arquivo `database.sql` atualizado pelo phpMyAdmin.
 
 ---
 
@@ -125,7 +141,7 @@ Se o MySQL não iniciar por causa da porta 3306, feche outro MySQL aberto ou alt
 
 ---
 
-### 3. Criar o banco pelo phpMyAdmin
+### 3. Importar o banco pelo phpMyAdmin
 
 Acesse no navegador:
 
@@ -198,7 +214,7 @@ http://localhost/DivineEssence/cadastro.php
 ```
 
 Preencha nome, e-mail e senha.  
-Após cadastrar, o sistema já entra automaticamente na loja.
+Após cadastrar, o usuário poderá acessar a loja e realizar compras.
 
 ---
 
@@ -252,6 +268,21 @@ produtos: id, nome, descricao, preco, preco_antigo, imagem, categoria, estoque, 
 pedidos: id, usuario_id, nome_entrega, email_entrega, endereco, pagamento, total, status, criado_em
 itens_pedido: id, pedido_id, produto_id, nome_produto, preco_unitario, quantidade, subtotal, imagem
 ```
+
+---
+
+## Produtos cadastrados pelo `database.sql`
+
+A tabela `produtos` é recriada com apenas 4 registros iniciais:
+
+| Produto | Categoria |
+| --- | --- |
+| Strawberry Pavlova | Perfumes |
+| Orquidea Silvestre | Perfumes |
+| Lunar Energy | Perfumes |
+| Kit Trio Divine Essence | Kits |
+
+Se o site mostrar produtos como perfume infantil, maquiagem ou outros itens antigos, o banco importado não é o atualizado. Nesse caso, importe novamente o arquivo `database.sql`.
 
 ---
 
@@ -312,6 +343,29 @@ itens_pedido.id
 
 ---
 
+### Produtos antigos ainda aparecem na loja
+
+Isso acontece quando o banco antigo ainda está sendo usado ou quando o `database.sql` antigo foi importado.
+
+Para corrigir:
+
+1. Abra o phpMyAdmin.
+2. Vá em **Importar**.
+3. Selecione o arquivo `database.sql` atualizado.
+4. Clique em **Executar**.
+5. Atualize a página da loja no navegador.
+
+Depois disso, devem aparecer somente:
+
+```text
+Strawberry Pavlova
+Orquidea Silvestre
+Lunar Energy
+Kit Trio Divine Essence
+```
+
+---
+
 ### Erro: MySQL shutdown unexpectedly
 
 Esse erro geralmente acontece quando outro MySQL está usando a porta 3306.
@@ -330,5 +384,7 @@ Se aparecer outro processo usando a porta, finalize o processo ou pare o serviç
 
 - O banco de dados usado é `divine_essence`.
 - O arquivo `database.sql` deve ser importado antes de usar o site.
+- O `database.sql` atualizado apaga e recria o banco.
+- A loja inicial deve exibir somente os 3 perfumes principais e o kit.
 - As imagens principais ficam na pasta `img/`.
 - O painel admin usa a pasta `img/produtos/` para imagens enviadas pelo formulário.
