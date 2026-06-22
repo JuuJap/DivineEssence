@@ -271,20 +271,6 @@ itens_pedido: id, pedido_id, produto_id, nome_produto, preco_unitario, quantidad
 
 ---
 
-## Produtos cadastrados pelo `database.sql`
-
-A tabela `produtos` é recriada com apenas 4 registros iniciais:
-
-| Produto | Categoria |
-| --- | --- |
-| Strawberry Pavlova | Perfumes |
-| Orquidea Silvestre | Perfumes |
-| Lunar Energy | Perfumes |
-| Kit Trio Divine Essence | Kits |
-
-Se o site mostrar produtos como perfume infantil, maquiagem ou outros itens antigos, o banco importado não é o atualizado. Nesse caso, importe novamente o arquivo `database.sql`.
-
----
 
 ## Páginas principais
 
