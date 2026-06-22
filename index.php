@@ -5,40 +5,54 @@ require_once "conexao.php";
 $qtdCarrinho = array_sum($_SESSION["carrinho"] ?? []);
 
 $categoria = $_GET["categoria"] ?? "";
-$busca = $_GET["busca"] ?? "";
+$busca = trim($_GET["busca"] ?? "");
 
-$where = ["ativo = 1"];
-$params = [];
-$types = "";
+function buscarItensLoja($conn, $categoria, $busca, $somenteKits = false) {
+    $where = ["ativo = 1"];
+    $params = [];
+    $types = "";
 
-if ($categoria !== "") {
-    $where[] = "categoria = ?";
-    $params[] = $categoria;
-    $types .= "s";
+    if ($somenteKits) {
+        $where[] = "categoria = 'Kits'";
+    } else {
+        $where[] = "categoria <> 'Kits'";
+    }
+
+    if ($categoria !== "") {
+        if ($somenteKits && $categoria !== "Kits") {
+            $where[] = "1 = 0";
+        }
+
+        if (!$somenteKits && $categoria === "Kits") {
+            $where[] = "1 = 0";
+        }
+
+        if (!$somenteKits && in_array($categoria, ["Femininos", "Masculinos"], true)) {
+            $where[] = "categoria = ?";
+            $params[] = $categoria;
+            $types .= "s";
+        }
+    }
+
+    if ($busca !== "") {
+        $where[] = "nome LIKE ?";
+        $params[] = "%" . $busca . "%";
+        $types .= "s";
+    }
+
+    $sql = "SELECT * FROM produtos WHERE " . implode(" AND ", $where) . " ORDER BY id ASC";
+    $stmt = $conn->prepare($sql);
+
+    if (!empty($params)) {
+        $stmt->bind_param($types, ...$params);
+    }
+
+    $stmt->execute();
+    return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
 }
 
-if ($busca !== "") {
-    $where[] = "nome LIKE ?";
-    $params[] = "%" . $busca . "%";
-    $types .= "s";
-}
-
-$sql = "SELECT * FROM produtos";
-
-if (!empty($where)) {
-    $sql .= " WHERE " . implode(" AND ", $where);
-}
-
-$sql .= " ORDER BY id ASC";
-
-$stmt = $conn->prepare($sql);
-
-if (!empty($params)) {
-    $stmt->bind_param($types, ...$params);
-}
-
-$stmt->execute();
-$produtos = $stmt->get_result();
+$produtos = buscarItensLoja($conn, $categoria, $busca, false);
+$kits = buscarItensLoja($conn, $categoria, $busca, true);
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -54,7 +68,7 @@ $produtos = $stmt->get_result();
 >
 
 <link rel="stylesheet" href="style.css">
-<link rel="stylesheet" href="ecommerce.css?v=1">
+<link rel="stylesheet" href="ecommerce.css?v=8">
 
   <link
     rel="stylesheet"
@@ -106,6 +120,7 @@ $produtos = $stmt->get_result();
 <nav class="menu">
     <a href="index.php?categoria=Femininos">Femininos</a>
     <a href="index.php?categoria=Masculinos">Masculinos</a>
+    <a href="index.php?categoria=Kits">Kits</a>
     <a href="carrinho.php">Carrinho</a>
 </nav>
 
@@ -157,14 +172,15 @@ $produtos = $stmt->get_result();
     </div>
 </section>
 
+<?php if (!empty($produtos)): ?>
 <section class="produtos">
     <div class="topo-produtos">
-        <h2>Produtos</h2>
+        <h2>Perfumes</h2>
         <a href="index.php">Ver todos</a>
     </div>
 
     <div class="grid-produtos">
-        <?php while ($produto = $produtos->fetch_assoc()): ?>
+        <?php foreach ($produtos as $produto): ?>
             <div class="produto-card">
                 <a href="produto.php?id=<?= $produto["id"] ?>" class="produto-link">
                     <div class="produto-img">
@@ -190,9 +206,57 @@ $produtos = $stmt->get_result();
                     </button>
                 </form>
             </div>
-        <?php endwhile; ?>
+        <?php endforeach; ?>
     </div>
 </section>
+<?php endif; ?>
+
+<?php if (!empty($kits)): ?>
+<section class="produtos kits-section">
+    <div class="topo-produtos">
+        <h2>Kits</h2>
+        <a href="index.php?categoria=Kits">Ver kits</a>
+    </div>
+
+    <div class="grid-produtos grid-kits">
+        <?php foreach ($kits as $produto): ?>
+            <div class="produto-card kit-card">
+                <a href="produto.php?id=<?= $produto["id"] ?>" class="produto-link">
+                    <div class="produto-img">
+                        <img src="<?= htmlspecialchars($produto["imagem"]) ?>" alt="<?= htmlspecialchars($produto["nome"]) ?>">
+                    </div>
+
+                    <div class="avaliacao">
+                        ★★★★★ <span>(<?= (int)$produto["avaliacao_qtd"] ?>)</span>
+                    </div>
+
+                    <h3><?= htmlspecialchars($produto["nome"]) ?></h3>
+
+                    <p class="preco">
+                        R$ <?= number_format($produto["preco"], 2, ",", ".") ?>
+                    </p>
+                </a>
+
+                <form action="adicionar_carrinho.php" method="POST">
+                    <input type="hidden" name="produto_id" value="<?= $produto["id"] ?>">
+                    <input type="hidden" name="quantidade" value="1">
+                    <button type="submit" name="acao" value="carrinho" class="btn-card-carrinho">
+                        Adicionar ao carrinho
+                    </button>
+                </form>
+            </div>
+        <?php endforeach; ?>
+    </div>
+</section>
+<?php endif; ?>
+
+<?php if (empty($produtos) && empty($kits)): ?>
+    <section class="produtos">
+        <div class="box-loja mensagem-admin">
+            Nenhum produto encontrado.
+        </div>
+    </section>
+<?php endif; ?>
 
 <button id="btnTopo">
     <i class="fa-solid fa-arrow-up"></i>

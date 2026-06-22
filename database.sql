@@ -76,14 +76,20 @@ CREATE TABLE IF NOT EXISTS itens_pedido (
 
 -- ============================================================
 -- Produtos iniciais
--- A loja trabalha apenas com perfumes adultos femininos e masculinos.
+-- A loja trabalha com perfumes adultos femininos, masculinos e kits de perfumes.
 -- O UPDATE abaixo remove da vitrine produtos antigos fora do catálogo atual.
 -- ============================================================
 
 UPDATE produtos
 SET ativo = 0
-WHERE categoria NOT IN ('Femininos', 'Masculinos')
-   OR id BETWEEN 4 AND 8;
+WHERE categoria NOT IN ('Femininos', 'Masculinos', 'Kits')
+   OR nome IN (
+       'Little Twin Stars',
+       'Little Blossom',
+       'Essencial Kids',
+       'Orquídea Glow',
+       'Lunar Glow'
+   );
 
 INSERT INTO produtos 
 (nome, descricao, preco, preco_antigo, imagem, categoria, estoque, avaliacao_qtd, ativo)
@@ -131,6 +137,22 @@ SELECT
     1
 WHERE NOT EXISTS (
     SELECT 1 FROM produtos WHERE nome = 'Lunar Energy'
+);
+
+INSERT INTO produtos 
+(nome, descricao, preco, preco_antigo, imagem, categoria, estoque, avaliacao_qtd, ativo)
+SELECT
+    'Kit Trio Divine Essence',
+    'Kit especial com três perfumes adultos: Lunar, Orquídea Selvagem e Essência. Uma seleção sofisticada com fragrâncias feminina e masculina para diferentes momentos.',
+    399.90,
+    459.90,
+    'img/kit_trio_divine_essence_perfumes_reais.png',
+    'Kits',
+    10,
+    48,
+    1
+WHERE NOT EXISTS (
+    SELECT 1 FROM produtos WHERE nome = 'Kit Trio Divine Essence'
 );
 
 -- ============================================================

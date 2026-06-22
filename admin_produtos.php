@@ -25,6 +25,21 @@ function validarTokenCSRF() {
     }
 }
 
+function definirCategoriaProduto($tipoItem, $categoriaPerfume) {
+    $tipoItem = trim($tipoItem);
+    $categoriaPerfume = trim($categoriaPerfume);
+
+    if ($tipoItem === "kit") {
+        return "Kits";
+    }
+
+    if ($tipoItem === "perfume" && in_array($categoriaPerfume, ["Femininos", "Masculinos"], true)) {
+        return $categoriaPerfume;
+    }
+
+    return "";
+}
+
 function salvarImagem($campo, $pastaUpload) {
     if (!isset($_FILES[$campo]) || $_FILES[$campo]["error"] !== UPLOAD_ERR_OK) {
         return null;
@@ -75,7 +90,7 @@ if (isset($_GET["editar"])) {
 }
 
 /* =========================
-   CADASTRAR PRODUTO
+   CADASTRAR PRODUTO OU KIT
 ========================= */
 if (isset($_POST["acao"]) && $_POST["acao"] === "cadastrar") {
     validarTokenCSRF();
@@ -84,43 +99,48 @@ if (isset($_POST["acao"]) && $_POST["acao"] === "cadastrar") {
     $descricao = trim($_POST["descricao"]);
     $preco = floatval(str_replace(",", ".", $_POST["preco"]));
     $precoAntigo = !empty($_POST["preco_antigo"]) ? floatval(str_replace(",", ".", $_POST["preco_antigo"])) : null;
-    $categoria = trim($_POST["categoria"]);
+    $tipoItem = $_POST["tipo_item"] ?? "perfume";
+    $categoria = definirCategoriaProduto($tipoItem, $_POST["categoria"] ?? "");
     $estoque = intval($_POST["estoque"]);
     $avaliacaoQtd = intval($_POST["avaliacao_qtd"]);
 
-    $imagem = salvarImagem("imagem", $pastaUpload);
-
-    if (!$imagem) {
-        $mensagem = "Erro: envie uma imagem válida em JPG, PNG ou WEBP.";
+    if ($categoria === "") {
+        $mensagem = "Erro: selecione se o cadastro é de perfume ou kit.";
     } else {
-        $sql = "INSERT INTO produtos 
-        (nome, descricao, preco, preco_antigo, imagem, categoria, estoque, avaliacao_qtd, ativo)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, 1)";
+        $imagem = salvarImagem("imagem", $pastaUpload);
 
-        $stmt = $conn->prepare($sql);
-        $stmt->bind_param(
-            "ssddssii",
-            $nome,
-            $descricao,
-            $preco,
-            $precoAntigo,
-            $imagem,
-            $categoria,
-            $estoque,
-            $avaliacaoQtd
-        );
-
-        if ($stmt->execute()) {
-            header("Location: admin_produtos.php?msg=cadastrado");
-            exit;
+        if (!$imagem) {
+            $mensagem = "Erro: envie uma imagem válida em JPG, PNG ou WEBP com até 3 MB.";
         } else {
-            $mensagem = "Erro ao cadastrar produto.";
+            $sql = "INSERT INTO produtos 
+            (nome, descricao, preco, preco_antigo, imagem, categoria, estoque, avaliacao_qtd, ativo)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, 1)";
+
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param(
+                "ssddssii",
+                $nome,
+                $descricao,
+                $preco,
+                $precoAntigo,
+                $imagem,
+                $categoria,
+                $estoque,
+                $avaliacaoQtd
+            );
+
+            if ($stmt->execute()) {
+                header("Location: admin_produtos.php?msg=cadastrado");
+                exit;
+            } else {
+                $mensagem = "Erro ao cadastrar item.";
+            }
         }
     }
 }
 
 /* =========================
-   ATUALIZAR PRODUTO
+   ATUALIZAR PRODUTO OU KIT
 ========================= */
 if (isset($_POST["acao"]) && $_POST["acao"] === "editar") {
     validarTokenCSRF();
@@ -130,45 +150,50 @@ if (isset($_POST["acao"]) && $_POST["acao"] === "editar") {
     $descricao = trim($_POST["descricao"]);
     $preco = floatval(str_replace(",", ".", $_POST["preco"]));
     $precoAntigo = !empty($_POST["preco_antigo"]) ? floatval(str_replace(",", ".", $_POST["preco_antigo"])) : null;
-    $categoria = trim($_POST["categoria"]);
+    $tipoItem = $_POST["tipo_item"] ?? "perfume";
+    $categoria = definirCategoriaProduto($tipoItem, $_POST["categoria"] ?? "");
     $estoque = intval($_POST["estoque"]);
     $avaliacaoQtd = intval($_POST["avaliacao_qtd"]);
 
-    $imagemAtual = $_POST["imagem_atual"];
-    $novaImagem = salvarImagem("imagem", $pastaUpload);
-
-    $imagemFinal = $novaImagem ? $novaImagem : $imagemAtual;
-
-    $sql = "UPDATE produtos SET
-        nome = ?,
-        descricao = ?,
-        preco = ?,
-        preco_antigo = ?,
-        imagem = ?,
-        categoria = ?,
-        estoque = ?,
-        avaliacao_qtd = ?
-        WHERE id = ?";
-
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param(
-        "ssddssiii",
-        $nome,
-        $descricao,
-        $preco,
-        $precoAntigo,
-        $imagemFinal,
-        $categoria,
-        $estoque,
-        $avaliacaoQtd,
-        $id
-    );
-
-    if ($stmt->execute()) {
-        header("Location: admin_produtos.php?msg=editado");
-        exit;
+    if ($categoria === "") {
+        $mensagem = "Erro: selecione se o cadastro é de perfume ou kit.";
     } else {
-        $mensagem = "Erro ao editar produto.";
+        $imagemAtual = $_POST["imagem_atual"];
+        $novaImagem = salvarImagem("imagem", $pastaUpload);
+
+        $imagemFinal = $novaImagem ? $novaImagem : $imagemAtual;
+
+        $sql = "UPDATE produtos SET
+            nome = ?,
+            descricao = ?,
+            preco = ?,
+            preco_antigo = ?,
+            imagem = ?,
+            categoria = ?,
+            estoque = ?,
+            avaliacao_qtd = ?
+            WHERE id = ?";
+
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param(
+            "ssddssiii",
+            $nome,
+            $descricao,
+            $preco,
+            $precoAntigo,
+            $imagemFinal,
+            $categoria,
+            $estoque,
+            $avaliacaoQtd,
+            $id
+        );
+
+        if ($stmt->execute()) {
+            header("Location: admin_produtos.php?msg=editado");
+            exit;
+        } else {
+            $mensagem = "Erro ao editar item.";
+        }
     }
 }
 
@@ -195,24 +220,25 @@ if (isset($_POST["acao"]) && in_array($_POST["acao"], ["remover", "ativar"], tru
 ========================= */
 if (isset($_GET["msg"])) {
     if ($_GET["msg"] === "cadastrado") {
-        $mensagem = "Produto cadastrado com sucesso!";
+        $mensagem = "Item cadastrado com sucesso!";
     }
 
     if ($_GET["msg"] === "editado") {
-        $mensagem = "Produto editado com sucesso!";
+        $mensagem = "Item editado com sucesso!";
     }
 
     if ($_GET["msg"] === "removido") {
-        $mensagem = "Produto removido da loja.";
+        $mensagem = "Item removido da loja.";
     }
 
     if ($_GET["msg"] === "ativado") {
-        $mensagem = "Produto reativado na loja.";
+        $mensagem = "Item reativado na loja.";
     }
 }
 
-$produtos = $conn->query("SELECT * FROM produtos ORDER BY ativo DESC, id DESC");
+$produtos = $conn->query("SELECT * FROM produtos ORDER BY ativo DESC, categoria = 'Kits', id DESC");
 $qtdCarrinho = array_sum($_SESSION["carrinho"] ?? []);
+$tipoSelecionado = ($produtoEditar && $produtoEditar["categoria"] === "Kits") ? "kit" : "perfume";
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -221,7 +247,7 @@ $qtdCarrinho = array_sum($_SESSION["carrinho"] ?? []);
     <title>Admin Produtos | Divine Essence</title>
 
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="ecommerce.css?v=7">
+    <link rel="stylesheet" href="ecommerce.css?v=8">
 
     <link
         rel="stylesheet"
@@ -261,13 +287,13 @@ $qtdCarrinho = array_sum($_SESSION["carrinho"] ?? []);
 
 <nav class="menu">
     <a href="index.php">Início</a>
-    <a href="admin_produtos.php">Produtos</a>
+    <a href="admin_produtos.php">Produtos e Kits</a>
     <a href="meus_pedidos.php">Meus pedidos</a>
 </nav>
 
 <main class="pagina-loja">
 
-    <h1 class="titulo-pagina">Painel de Produtos</h1>
+    <h1 class="titulo-pagina">Painel de Produtos e Kits</h1>
 
     <?php if ($mensagem): ?>
         <div class="box-loja mensagem-admin">
@@ -278,9 +304,9 @@ $qtdCarrinho = array_sum($_SESSION["carrinho"] ?? []);
     <section class="box-loja admin-form-box">
 
         <?php if ($produtoEditar): ?>
-            <h2>Editar produto</h2>
+            <h2>Editar item</h2>
         <?php else: ?>
-            <h2>Adicionar produto</h2>
+            <h2>Adicionar item</h2>
         <?php endif; ?>
 
         <form method="POST" enctype="multipart/form-data" class="form-admin-produto">
@@ -296,18 +322,16 @@ $qtdCarrinho = array_sum($_SESSION["carrinho"] ?? []);
 
             <div class="admin-grid-form">
                 <div>
-                    <label>Nome do produto</label>
-                    <input 
-                        type="text" 
-                        name="nome" 
-                        value="<?= $produtoEditar ? htmlspecialchars($produtoEditar["nome"]) : "" ?>" 
-                        required
-                    >
+                    <label>Tipo de item</label>
+                    <select name="tipo_item" id="tipoItem" required>
+                        <option value="perfume" <?= $tipoSelecionado === "perfume" ? "selected" : "" ?>>Perfume</option>
+                        <option value="kit" <?= $tipoSelecionado === "kit" ? "selected" : "" ?>>Kit</option>
+                    </select>
                 </div>
 
-                <div>
-                    <label>Categoria</label>
-                    <select name="categoria" required>
+                <div id="grupoCategoriaPerfume">
+                    <label>Categoria do perfume</label>
+                    <select name="categoria" id="categoriaPerfume">
                         <option value="">Selecione</option>
 
                         <?php
@@ -320,6 +344,16 @@ $qtdCarrinho = array_sum($_SESSION["carrinho"] ?? []);
                             </option>
                         <?php endforeach; ?>
                     </select>
+                </div>
+
+                <div>
+                    <label>Nome do item</label>
+                    <input 
+                        type="text" 
+                        name="nome" 
+                        value="<?= $produtoEditar ? htmlspecialchars($produtoEditar["nome"]) : "" ?>" 
+                        required
+                    >
                 </div>
 
                 <div>
@@ -368,7 +402,7 @@ $qtdCarrinho = array_sum($_SESSION["carrinho"] ?? []);
             <label>Descrição</label>
             <textarea name="descricao" required><?= $produtoEditar ? htmlspecialchars($produtoEditar["descricao"]) : "" ?></textarea>
 
-            <label>Imagem do produto</label>
+            <label>Imagem do item</label>
             <input 
                 type="file" 
                 name="imagem" 
@@ -384,7 +418,7 @@ $qtdCarrinho = array_sum($_SESSION["carrinho"] ?? []);
             <?php endif; ?>
 
             <button type="submit" class="btn-loja">
-                <?= $produtoEditar ? "Salvar alterações" : "Cadastrar produto" ?>
+                <?= $produtoEditar ? "Salvar alterações" : "Cadastrar item" ?>
             </button>
 
             <?php if ($produtoEditar): ?>
@@ -397,7 +431,7 @@ $qtdCarrinho = array_sum($_SESSION["carrinho"] ?? []);
     </section>
 
     <section class="box-loja">
-        <h2>Produtos cadastrados</h2>
+        <h2>Itens cadastrados</h2>
 
         <?php while ($produto = $produtos->fetch_assoc()): ?>
             <div class="admin-produto-item">
@@ -410,6 +444,7 @@ $qtdCarrinho = array_sum($_SESSION["carrinho"] ?? []);
                 <div>
                     <h3><?= htmlspecialchars($produto["nome"]) ?></h3>
 
+                    <p>Tipo: <?= $produto["categoria"] === "Kits" ? "Kit" : "Perfume" ?></p>
                     <p>Categoria: <?= htmlspecialchars($produto["categoria"]) ?></p>
 
                     <p>
@@ -438,7 +473,7 @@ $qtdCarrinho = array_sum($_SESSION["carrinho"] ?? []);
                     </a>
 
                     <?php if ($produto["ativo"]): ?>
-                        <form method="POST" class="form-acao-admin" onsubmit="return confirm('Remover este produto da loja?')">
+                        <form method="POST" class="form-acao-admin" onsubmit="return confirm('Remover este item da loja?')">
                             <input type="hidden" name="csrf_token" value="<?= $_SESSION["csrf_token"] ?>">
                             <input type="hidden" name="acao" value="remover">
                             <input type="hidden" name="id" value="<?= $produto["id"] ?>">
@@ -467,5 +502,29 @@ $qtdCarrinho = array_sum($_SESSION["carrinho"] ?? []);
 </main>
 
 <script src="script.js?v=4"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const tipoItem = document.getElementById("tipoItem");
+    const grupoCategoria = document.getElementById("grupoCategoriaPerfume");
+    const categoriaPerfume = document.getElementById("categoriaPerfume");
+
+    function atualizarFormulario() {
+        if (!tipoItem || !grupoCategoria || !categoriaPerfume) {
+            return;
+        }
+
+        if (tipoItem.value === "kit") {
+            grupoCategoria.style.display = "none";
+            categoriaPerfume.removeAttribute("required");
+        } else {
+            grupoCategoria.style.display = "block";
+            categoriaPerfume.setAttribute("required", "required");
+        }
+    }
+
+    atualizarFormulario();
+    tipoItem.addEventListener("change", atualizarFormulario);
+});
+</script>
 </body>
 </html>

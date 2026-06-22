@@ -1833,3 +1833,37 @@ a {
         text-align: center;
     }
 }
+/* ÁREA DE KITS */
+.kits-section {
+    padding-top: 10px;
+    padding-bottom: 70px;
+}
+
+.grid-kits {
+    grid-template-columns: repeat(3, 1fr) !important;
+}
+
+.kit-card {
+    border: 1px solid rgba(122, 79, 79, 0.18);
+}
+
+.kit-card .produto-img {
+    height: 340px;
+    background: linear-gradient(135deg, #f8e4d1, #e9edf8);
+}
+
+.kit-card .produto-img img {
+    object-fit: cover;
+}
+
+@media (max-width: 900px) {
+    .grid-kits {
+        grid-template-columns: repeat(2, 1fr) !important;
+    }
+}
+
+@media (max-width: 600px) {
+    .grid-kits {
+        grid-template-columns: 1fr !important;
+    }
+}

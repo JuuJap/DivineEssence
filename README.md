@@ -1,7 +1,7 @@
 # Divine Essence
 
-**Divine Essence** é uma loja virtual fictícia de perfumes adultos desenvolvida para fins acadêmicos.
-O projeto simula um e-commerce com cadastro de usuários, login, catálogo de perfumes femininos e masculinos, carrinho de compras, checkout, histórico de pedidos, tema claro/escuro e painel administrativo.
+**Divine Essence** é uma loja virtual fictícia de perfumes desenvolvida para fins acadêmicos.  
+O projeto simula um e-commerce com cadastro de usuários, login, catálogo de perfumes e kits, carrinho de compras, checkout, histórico de pedidos, tema claro/escuro e painel administrativo.
 
 ---
 
@@ -14,17 +14,17 @@ O projeto simula um e-commerce com cadastro de usuários, login, catálogo de pe
 
 ---
 
-## Tecnologias Utilizadas
+## Tecnologias utilizadas
 
-* HTML5
-* CSS3
-* JavaScript
-* PHP
-* MySQL
-* Bootstrap
-* Font Awesome
-* XAMPP
-* phpMyAdmin
+- HTML5
+- CSS3
+- JavaScript
+- PHP
+- MySQL
+- Bootstrap
+- Font Awesome
+- XAMPP
+- phpMyAdmin
 
 ---
 
@@ -32,39 +32,39 @@ O projeto simula um e-commerce com cadastro de usuários, login, catálogo de pe
 
 ### Usuário
 
-* Cadastro de conta
-* Login e logout
-* Senhas criptografadas
-* Sessão de usuário
-* Visualização de produtos
-* Adição de produtos ao carrinho
-* Finalização de compras
-* Histórico de pedidos
+- Cadastro de conta
+- Login e logout
+- Senhas criptografadas
+- Sessão de usuário
+- Visualização de perfumes e kits
+- Adição de produtos ao carrinho
+- Finalização de compras
+- Histórico de pedidos
 
 ### Loja
 
-* Catálogo de perfumes adultos
-* Categorias Femininos e Masculinos
-* Página individual de produto
-* Filtro por categoria
-* Barra de pesquisa
-* Carrinho de compras
-* Checkout
-* Tema claro e escuro
-* Layout responsivo
+- Catálogo de perfumes
+- Área exclusiva de kits
+- Página individual de produto
+- Filtro por categoria
+- Barra de pesquisa
+- Carrinho de compras
+- Checkout
+- Tema claro e escuro
+- Layout responsivo
 
 ### Administrador
 
-* Acesso a painel administrativo
-* Cadastro de novos produtos
-* Upload de imagem do produto
-* Edição de produtos
-* Remoção de produtos da loja
-* Reativação de produtos removidos
+- Acesso ao painel administrativo
+- Cadastro de perfumes ou kits
+- Upload de imagem do item
+- Edição de perfumes e kits
+- Remoção de produtos da loja
+- Reativação de produtos removidos
 
 ---
 
-## Estrutura Principal
+## Estrutura principal
 
 ```text
 DivineEssence/
@@ -79,6 +79,11 @@ DivineEssence/
 ├── admin_produtos.php
 ├── entrar.php
 ├── cadastro.php
+├── cadastro_usuario.php
+├── login_usuario.php
+├── logout.php
+├── proteger.php
+├── proteger_admin.php
 ├── conexao.php
 ├── script.js
 ├── style.css
@@ -89,27 +94,17 @@ DivineEssence/
 
 ---
 
-## Como Instalar
+## Passo a passo para instalar no XAMPP
 
-### 1. Baixar o projeto
+### 1. Copiar o projeto para o XAMPP
 
-Baixe o projeto pelo GitHub ou clone o repositório:
-
-```bash
-git clone https://github.com/JuuJap/DivineEssence.git
-```
-
----
-
-### 2. Colocar no XAMPP
-
-Copie a pasta do projeto para:
+Copie a pasta **DivineEssence** para dentro de:
 
 ```text
 C:\xampp\htdocs\
 ```
 
-A pasta deve ficar assim:
+O caminho final deve ficar assim:
 
 ```text
 C:\xampp\htdocs\DivineEssence
@@ -117,38 +112,54 @@ C:\xampp\htdocs\DivineEssence
 
 ---
 
-### 3. Iniciar o XAMPP
+### 2. Abrir o XAMPP
 
-Abra o XAMPP e inicie:
+Abra o **XAMPP Control Panel** como administrador e inicie:
 
 ```text
 Apache
 MySQL
 ```
 
+Se o MySQL não iniciar por causa da porta 3306, feche outro MySQL aberto ou altere a porta antes de continuar.
+
 ---
 
-### 4. Importar o banco de dados
+### 3. Criar o banco pelo phpMyAdmin
 
-Abra o phpMyAdmin:
+Acesse no navegador:
 
 ```text
 http://localhost/phpmyadmin
 ```
 
-Depois importe o arquivo:
+Depois vá em:
+
+```text
+Importar
+```
+
+Selecione o arquivo:
 
 ```text
 database.sql
 ```
 
-Esse arquivo cria o banco `divine_essence`, as tabelas necessárias e os produtos iniciais.
+Clique em **Executar**.
+
+> Atenção: o arquivo `database.sql` apaga e recria o banco `divine_essence`. Se já existir algum dado importante, exporte antes de importar.
 
 ---
 
-### 5. Conferir a conexão
+### 4. Conferir a conexão com o banco
 
-O arquivo `conexao.php` deve estar configurado assim:
+Abra o arquivo:
+
+```text
+conexao.php
+```
+
+A configuração padrão deve estar assim:
 
 ```php
 $host = "localhost";
@@ -157,13 +168,14 @@ $senha = "";
 $banco = "divine_essence";
 ```
 
-Caso seu MySQL tenha senha, altere a variável `$senha`.
+No XAMPP padrão, o usuário é `root` e a senha fica vazia.  
+Se você colocou senha no MySQL, altere a variável `$senha`.
 
 ---
 
-## Como Executar
+### 5. Acessar o projeto no navegador
 
-Depois de configurar o banco e iniciar o XAMPP, acesse:
+Depois de importar o banco e iniciar o Apache/MySQL, acesse:
 
 ```text
 http://localhost/DivineEssence/
@@ -177,82 +189,146 @@ http://localhost/DivineEssence/index.php
 
 ---
 
-## Como Criar um Administrador
+## Como criar uma conta
 
-Primeiro, cadastre um usuário normalmente pelo site:
+Acesse:
 
 ```text
 http://localhost/DivineEssence/cadastro.php
 ```
 
-Depois, no phpMyAdmin, execute:
+Preencha nome, e-mail e senha.  
+Após cadastrar, o sistema já entra automaticamente na loja.
+
+---
+
+## Como transformar uma conta em administrador
+
+Primeiro, cadastre uma conta normalmente pelo site.
+
+Depois, no phpMyAdmin, clique no banco:
+
+```text
+divine_essence
+```
+
+Vá na aba **SQL** e execute:
 
 ```sql
-USE divine_essence;
-
 UPDATE usuarios
 SET tipo = 'admin'
 WHERE email = 'SEU_EMAIL_AQUI';
 ```
 
-Após isso, faça logout e login novamente.
-O botão **Admin** aparecerá no site.
+Troque `SEU_EMAIL_AQUI` pelo e-mail usado no cadastro.
+
+Depois faça logout e login novamente.  
+O botão **Admin** aparecerá no topo do site.
 
 ---
 
-## Páginas Principais
+## Banco de dados usado no projeto
 
-| Página               | Função                 |
-| -------------------- | ---------------------- |
-| `index.php`          | Página inicial da loja |
-| `produto.php`        | Detalhes de um produto |
-| `carrinho.php`       | Carrinho de compras    |
-| `checkout.php`       | Finalização da compra  |
-| `meus_pedidos.php`   | Histórico de pedidos   |
-| `admin_produtos.php` | Painel administrativo  |
-| `entrar.php`         | Login                  |
-| `cadastro.php`       | Cadastro de usuário    |
+O arquivo `database.sql` cria o banco:
+
+```text
+divine_essence
+```
+
+E cria as tabelas:
+
+```text
+usuarios
+produtos
+pedidos
+itens_pedido
+```
+
+As colunas principais usadas pelo PHP são:
+
+```text
+usuarios: id, nome, email, senha, tipo, criado_em
+produtos: id, nome, descricao, preco, preco_antigo, imagem, categoria, estoque, avaliacao_qtd, ativo, criado_em
+pedidos: id, usuario_id, nome_entrega, email_entrega, endereco, pagamento, total, status, criado_em
+itens_pedido: id, pedido_id, produto_id, nome_produto, preco_unitario, quantidade, subtotal, imagem
+```
 
 ---
 
-## Painel Administrativo
+## Páginas principais
 
-O painel administrativo permite que o usuário admin gerencie os produtos pelo próprio site.
+| Página | Função |
+| --- | --- |
+| `index.php` | Página inicial da loja |
+| `produto.php` | Detalhes de um produto |
+| `carrinho.php` | Carrinho de compras |
+| `checkout.php` | Finalização da compra |
+| `meus_pedidos.php` | Histórico de pedidos |
+| `detalhe_pedido.php` | Detalhes de um pedido |
+| `admin_produtos.php` | Painel administrativo |
+| `entrar.php` | Login |
+| `cadastro.php` | Cadastro de usuário |
+
+---
+
+## Painel administrativo
+
+O painel administrativo permite que o usuário admin gerencie perfumes e kits pelo próprio site.
 
 No painel é possível:
 
-* adicionar produto;
-* enviar imagem;
-* editar informações;
-* remover produto da loja;
-* reativar produto removido.
+- adicionar perfume ou kit;
+- selecionar o tipo do item;
+- enviar imagem;
+- editar informações;
+- remover item da loja;
+- reativar item removido.
 
-Produtos removidos não são apagados do banco.
-Eles apenas deixam de aparecer na loja.
+Produtos removidos não são apagados do banco.  
+Eles apenas recebem `ativo = 0` e deixam de aparecer na loja.
+
+---
+
+## Possíveis erros e soluções
+
+### Erro: Unknown column 'id'
+
+Esse erro acontece quando o banco foi criado com colunas diferentes das que o PHP usa, por exemplo `id_usuario` ou `id_produto`.
+
+Para corrigir, importe novamente o arquivo:
+
+```text
+database.sql
+```
+
+Ele recria o banco com as colunas corretas:
+
+```text
+usuarios.id
+produtos.id
+pedidos.id
+itens_pedido.id
+```
+
+---
+
+### Erro: MySQL shutdown unexpectedly
+
+Esse erro geralmente acontece quando outro MySQL está usando a porta 3306.
+
+No Prompt de Comando, verifique:
+
+```cmd
+netstat -ano | findstr :3306
+```
+
+Se aparecer outro processo usando a porta, finalize o processo ou pare o serviço MySQL no Windows antes de iniciar o MySQL do XAMPP.
 
 ---
 
 ## Observações
 
-* O banco de dados usado é `divine_essence`.
-* O arquivo `database.sql` deve ser importado antes de usar o site.
-* As imagens principais ficam na pasta `img/`.
-* Produtos cadastrados pelo painel podem ser salvos em `img/produtos/`.
-* A loja trabalha apenas com perfumes adultos femininos e masculinos.
-* Para acessar áreas protegidas, o usuário precisa estar logado.
-* Para acessar o painel administrativo, o usuário precisa ter `tipo = 'admin'`.
-
----
-
-## Status do Projeto
-
-Projeto concluído para fins acadêmicos, com funcionalidades principais de um e-commerce:
-
-* login;
-* cadastro;
-* catálogo;
-* carrinho;
-* checkout;
-* pedidos;
-* painel administrativo;
-* tema claro/escuro.
+- O banco de dados usado é `divine_essence`.
+- O arquivo `database.sql` deve ser importado antes de usar o site.
+- As imagens principais ficam na pasta `img/`.
+- O painel admin usa a pasta `img/produtos/` para imagens enviadas pelo formulário.
