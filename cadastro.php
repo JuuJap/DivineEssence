@@ -57,9 +57,9 @@
             <a href="https://github.com/JuuJap/DivineEssence">Sobre</a>
         <a href="entrar.php">Entrar</a>
 
-        <button id="theme-toggle" onclick="toggleTheme()">
-            <span class="icon">🌙</span>
-        </button>
+        <button id="theme-toggle" type="button">
+    <span class="icon">🌙</span>
+</button>
     </nav>
 
 </header>
@@ -107,7 +107,7 @@
 
 </main>
 
-<script src="script.js?v=4"></script>
+<script src="script.js?v=5"></script>
 
 
 </body>

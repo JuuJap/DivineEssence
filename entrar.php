@@ -36,9 +36,9 @@
             <a href="cadastro.php">Criar conta</a>
 
             <!-- Botão de tema -->
-            <button id="theme-toggle" onclick="toggleTheme()">
-                <span class="icon">🌙</span>
-            </button>
+            <button id="theme-toggle" type="button">
+    <span class="icon">🌙</span>
+</button>
         </nav>
     </header>
 
@@ -75,7 +75,7 @@
 </div>
 
     <!-- Script -->
-<script src="script.js?v=4"></script>
+<script src="script.js?v=5"></script>
 
 <?php if(isset($_GET['erro'])): ?>
 <script>

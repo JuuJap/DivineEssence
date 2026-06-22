@@ -775,3 +775,45 @@ a {
         grid-template-columns: 1fr !important;
     }
 }
+
+/* Área de pagamento Pix no checkout */
+.pix-box {
+    display: none;
+    margin: 18px 0;
+    padding: 18px;
+    border-radius: 16px;
+    text-align: center;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+.pix-box.ativo {
+    display: block;
+}
+
+.pix-box h2 {
+    margin-bottom: 8px;
+    font-size: 22px;
+}
+
+.pix-box p {
+    margin-bottom: 14px;
+}
+
+.pix-link {
+    display: inline-block;
+}
+
+.pix-qrcode {
+    width: 220px;
+    max-width: 100%;
+    padding: 12px;
+    border-radius: 14px;
+    background: #ffffff;
+}
+
+.pix-box small {
+    display: block;
+    margin-top: 10px;
+    opacity: 0.85;
+}
